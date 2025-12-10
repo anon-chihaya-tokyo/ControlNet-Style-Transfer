@@ -1,0 +1,28 @@
+# === Python 编译垃圾 ===
+__pycache__/
+*.py[cod]
+*$py.class
+
+# === 虚拟环境 (防止把几千个包传上去) ===
+venv/
+env/
+.env
+.venv/
+miniconda3/
+
+# === 项目生成文件 (只传代码，不传结果) ===
+outputs/
+examples/
+*.log
+
+# === 大模型文件 (GitHub 单文件限 100MB) ===
+*.safetensors
+*.ckpt
+*.pth
+*.bin
+models/
+
+# === 系统垃圾 ===
+.DS_Store
+.vscode/
+.idea/
