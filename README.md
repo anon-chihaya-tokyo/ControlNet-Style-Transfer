@@ -1,95 +1,36 @@
-# 🎨 基于 Stable Diffusion 的图像风格迁移系统
+# 🎨 Enterprise-Grade AI Style Transfer System
+> 基于 Stable Diffusion 1.5 + ControlNet 的高保真图像风格迁移系统（工程重构版）
 
-## 项目简介
+![Python](https://img.shields.io/badge/Python-3.10-blue) ![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red) ![Diffusers](https://img.shields.io/badge/Diffusers-0.21%2B-orange) ![Gradio](https://img.shields.io/badge/Gradio-WebUI-green)
 
-本项目实现了基于深度学习的图像风格迁移功能，使用预训练的 Stable Diffusion 模型，能够将参考图片的风格（色调、光照、纹理）迁移到源图片上，同时保持源图片的内容结构。
+## 📖 项目简介
 
-## 技术栈
+本项目不再是一个简单的脚本，而是一个经过**工程化重构**的 AI 图像生成系统。它解决了传统 AI 绘画“抽卡”不可控的问题，通过引入 **ControlNet (Canny)** 技术，实现了对图像结构（如脸型、眼镜、姿态）的严格锁定，同时利用 **Realistic Vision V6.0** 模型提供SOTA级别的写实光影效果。
 
-- **深度学习框架**: PyTorch
-- **预训练模型**: Stable Diffusion v1.5
-- **推理库**: Diffusers (Hugging Face)
-- **用户界面**: Gradio
-- **图像处理**: OpenCV, Pillow
+**核心价值**：Structure (结构) + Style (风格) 的完美解耦与重组。
 
-## 核心功能
+## ✨ 核心特性 (Key Features)
 
-1. **自动风格提取**: 从参考图自动分析颜色、光照特征
-2. **结构保持**: 使用 img2img 管道保留源图内容
-3. **可调参数**: 风格强度、随机种子、自定义提示词
-4. **实时预览**: Gradio 界面支持即时查看结果
+- **🏛️ 模块化架构设计**：采用分层架构（配置层、核心层、表现层），高内聚低耦合，易于维护和扩展。
+- **🧠 智能离线优先加载**：内置 `ModelManager`，启动时优先读取本地缓存。即使断网也能秒级启动，彻底告别 HuggingFace 连接超时烦恼。
+- **⚡ 极致显存优化**：集成 `CPU Offload` 与 `VAE Slicing` 技术，支持在 **4GB 显存** 的笔记本（如 GTX 1650/RTX 3050）上流畅运行大模型。
+- **🎨 自动色彩校正**：引入直方图匹配算法（Histogram Matching），强制生成图继承参考图的色调分布。
+- **🛡️ 企业级安全过滤**：内置强力 Negative Prompt 策略，有效过滤 NSFW 内容及肢体崩坏。
+- **💾 结果自动归档**：所有生成结果自动按时间戳保存至 `outputs/` 目录，不再丢失灵感。
 
-## 安装与运行
+## 📂 项目架构
 
-### 环境要求
+本项目遵循工业级 Python 工程规范：
 
-- Python 3.8+
-- CUDA 11.8+ (GPU 推荐，CPU 也可运行但较慢)
-- 至少 8GB 显存 (GPU) 或 16GB 内存 (CPU)
-
-### 安装步骤
-```bash
-# 1. 创建 conda 环境
-conda create -n style_transfer python=3.10 -y
-conda activate style_transfer
-
-# 2. 安装依赖
-pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-
-# 3. 运行
-bash run.sh
-# 或直接运行
-python app.py
-```
-
-### 首次运行
-
-首次运行时，系统会自动从 Hugging Face 下载 Stable Diffusion 模型（约 4GB），请耐心等待。
-
-## 使用方法
-
-1. 启动后访问 `http://localhost:7860`
-2. 上传源图片（想要保留内容的图片）
-3. 上传参考图片（想要提取风格的图片）
-4. 调整风格强度（推荐 0.7-0.85）
-5. 点击"生成风格迁移"按钮
-6. 等待 10-30 秒即可看到结果
-
-## 项目结构
-```
+```text
 style_transfer_project/
-├── app.py              # 主程序
-├── requirements.txt    # 依赖列表
-├── run.sh             # 启动脚本
-├── README.md          # 项目说明
-└── examples/          # 示例图片（可选）
-```
-
-## 技术原理
-
-### 1. 模型选择
-使用 Stable Diffusion v1.5 作为基础模型，该模型在大规模图像数据集上预训练，具有强大的图像生成和编辑能力。
-
-### 2. 风格迁移流程
-1. **特征提取**: 分析参考图的颜色分布和亮度
-2. **提示词生成**: 将视觉特征转换为文本描述
-3. **条件生成**: 使用 img2img 管道，以源图为初始输入
-4. **迭代优化**: 通过 30 步 DDIM 采样生成结果
-
-### 3. 关键参数
-- `strength`: 控制风格迁移强度（0.3-1.0）
-- `guidance_scale`: 控制提示词引导强度（默认 7.5）
-- `num_inference_steps`: 生成步数（默认 30）
-
-## 性能优化
-
-- 使用 `torch.float16` 混合精度（GPU）
-- 启用注意力切片（`enable_attention_slicing`）节省显存
-- 图像预处理确保尺寸为 8 的倍数
-
-## 注意事项
-
-- 建议源图和参考图的主体内容相似（如都是人脸）
-- 风格强度过高可能导致源图内容失真
-- CPU 模式下生成速度较慢（约 2-5 分钟/张）
-
+├── config/                 # ⚙️ 配置中心
+│   └── settings.py         # 模型ID、默认Prompt、路径配置（在此修改模型）
+├── src/                    # 🧠 核心源码
+│   ├── model_loader.py     # 模型生命周期管理（单例模式/离线加载/显存优化）
+│   ├── pipeline.py         # 业务管线（生成逻辑/色彩校正/自动保存）
+│   ├── image_utils.py      # 图像处理算法（Canny边缘提取/直方图匹配）
+│   └── ui.py               # 前端界面（Gradio 依赖注入设计）
+├── outputs/                # 💾 结果产出（自动忽略上传）
+├── main.py                 # 🚀 系统启动入口
+└── requirements.txt        # 📦 依赖清单
