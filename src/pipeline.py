@@ -1,12 +1,48 @@
 # src/pipeline.py
-import torch
 import os
 import time
-from config.settings import DEVICE, DEFAULT_POS_PROMPT, DEFAULT_NEG_PROMPT, OUTPUT_DIR
-from src.image_utils import preprocess_image, get_canny_image, extract_style_features, apply_color_match
-import gradio as gr
+import uuid
 
-def run_style_transfer(pipe, source_image, reference_image, style_strength, custom_prompt, seed):
+import gradio as gr
+import torch
+
+from config.settings import (
+    DEFAULT_NEG_PROMPT,
+    DEFAULT_NUM_INFERENCE_STEPS,
+    DEFAULT_POS_PROMPT,
+    DEFAULT_CONTROLNET_SCALE,
+    DEFAULT_GUIDANCE_SCALE,
+    DEVICE,
+    OUTPUT_DIR,
+)
+from src.image_utils import (
+    apply_color_match,
+    extract_style_features,
+    get_canny_image,
+    preprocess_image,
+)
+
+
+def build_prompt(custom_prompt, style_desc):
+    prompt_parts = [DEFAULT_POS_PROMPT]
+    if custom_prompt and custom_prompt.strip():
+        prompt_parts.append(custom_prompt.strip())
+    if style_desc:
+        prompt_parts.append(style_desc)
+    return ", ".join(prompt_parts)
+
+
+def run_style_transfer(
+    pipe,
+    source_image,
+    reference_image,
+    style_strength,
+    custom_prompt,
+    seed,
+    controlnet_scale=DEFAULT_CONTROLNET_SCALE,
+    guidance_scale=DEFAULT_GUIDANCE_SCALE,
+    num_inference_steps=DEFAULT_NUM_INFERENCE_STEPS,
+):
     """
     核心生成函数
     参数:
@@ -26,7 +62,7 @@ def run_style_transfer(pipe, source_image, reference_image, style_strength, cust
     
     # 2. 构建提示词
     style_desc = extract_style_features(reference_image) if reference_image else ""
-    full_prompt = f"{DEFAULT_POS_PROMPT}, {custom_prompt}, {style_desc}"
+    full_prompt = build_prompt(custom_prompt, style_desc)
     print(f"🎨 生成提示词: {full_prompt}")
     
     # 3. 设置种子
@@ -39,9 +75,9 @@ def run_style_transfer(pipe, source_image, reference_image, style_strength, cust
         image=source_image,           # Img2Img 输入
         control_image=canny_image,    # ControlNet 输入
         strength=style_strength,
-        controlnet_conditioning_scale=0.5, # 推荐权重
-        guidance_scale=7.5,
-        num_inference_steps=30,
+        controlnet_conditioning_scale=controlnet_scale,
+        guidance_scale=guidance_scale,
+        num_inference_steps=int(num_inference_steps),
         generator=generator
     ).images[0]
     
@@ -51,7 +87,8 @@ def run_style_transfer(pipe, source_image, reference_image, style_strength, cust
     
     # 6. 自动保存结果 (新增功能)
     timestamp = time.strftime("%Y%m%d_%H%M%S")
-    save_path = os.path.join(OUTPUT_DIR, f"result_{timestamp}.png")
+    unique_id = uuid.uuid4().hex[:8]
+    save_path = os.path.join(OUTPUT_DIR, f"result_{timestamp}_{unique_id}.png")
     result.save(save_path)
     print(f"💾 结果已保存至: {save_path}")
     

@@ -13,8 +13,9 @@ class ModelManager:
         try:
             print(f"📂 [ModelManager] 尝试离线加载: {model_id} ...")
             return model_class.from_pretrained(model_id, local_files_only=True, **kwargs)
-        except Exception as e:
-            print(f"⚠️ 本地未找到，切换联网下载: {model_id}")
+        except OSError as e:
+            print(f"⚠️ 本地缓存不可用，切换联网下载: {model_id}")
+            print(f"   详细原因: {e}")
             return model_class.from_pretrained(model_id, local_files_only=False, **kwargs)
 
     def load_models(self):
@@ -43,6 +44,8 @@ class ModelManager:
             print("⚡ 启用 CPU Offload 显存优化...")
             self.pipe.enable_model_cpu_offload()
             self.pipe.enable_vae_slicing()
+        else:
+            self.pipe.to(DEVICE)
         
         print("✅ 模型加载完毕！")
         return self.pipe

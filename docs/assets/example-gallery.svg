@@ -1,0 +1,41 @@
+<svg width="1280" height="640" viewBox="0 0 1280 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="640" fill="#F3EEE3"/>
+  <text x="72" y="84" fill="#2B2B2B" font-size="36" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Example Workflow</text>
+  <text x="72" y="122" fill="#675642" font-size="20" font-family="Segoe UI, Arial, sans-serif">Source structure + reference mood + controlled generation</text>
+
+  <rect x="72" y="162" width="336" height="404" rx="20" fill="#FBF8F1" stroke="#DCCFBB" stroke-width="2"/>
+  <rect x="472" y="162" width="336" height="404" rx="20" fill="#FBF8F1" stroke="#DCCFBB" stroke-width="2"/>
+  <rect x="872" y="162" width="336" height="404" rx="20" fill="#FBF8F1" stroke="#DCCFBB" stroke-width="2"/>
+
+  <rect x="102" y="214" width="276" height="252" rx="16" fill="url(#source)"/>
+  <rect x="502" y="214" width="276" height="252" rx="16" fill="url(#reference)"/>
+  <rect x="902" y="214" width="276" height="252" rx="16" fill="url(#result)"/>
+
+  <text x="102" y="510" fill="#314C42" font-size="28" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Source</text>
+  <text x="102" y="542" fill="#5E564B" font-size="18" font-family="Segoe UI, Arial, sans-serif">Provides pose and outline.</text>
+
+  <text x="502" y="510" fill="#6A4E34" font-size="28" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Reference</text>
+  <text x="502" y="542" fill="#5E564B" font-size="18" font-family="Segoe UI, Arial, sans-serif">Provides color and atmosphere.</text>
+
+  <text x="902" y="510" fill="#6C3F2B" font-size="28" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Result</text>
+  <text x="902" y="542" fill="#5E564B" font-size="18" font-family="Segoe UI, Arial, sans-serif">Keeps structure while shifting style.</text>
+
+  <path d="M420 336H456" stroke="#B16D3D" stroke-width="6" stroke-linecap="round"/>
+  <path d="M820 336H856" stroke="#173A2F" stroke-width="6" stroke-linecap="round"/>
+
+  <defs>
+    <linearGradient id="source" x1="102" y1="214" x2="378" y2="466" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D9E2DA"/>
+      <stop offset="1" stop-color="#87A290"/>
+    </linearGradient>
+    <linearGradient id="reference" x1="502" y1="214" x2="778" y2="466" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F0D8B7"/>
+      <stop offset="1" stop-color="#C6814D"/>
+    </linearGradient>
+    <linearGradient id="result" x1="902" y1="214" x2="1178" y2="466" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E2D5C4"/>
+      <stop offset="0.55" stop-color="#D19A6B"/>
+      <stop offset="1" stop-color="#375647"/>
+    </linearGradient>
+  </defs>
+</svg>

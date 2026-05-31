@@ -1,0 +1,44 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" fill="#F4F0E7"/>
+  <rect x="28" y="24" width="1224" height="672" rx="22" fill="#FFFDF8" stroke="#D8CCB8" stroke-width="2"/>
+  <rect x="28" y="24" width="1224" height="78" rx="22" fill="#173A2F"/>
+  <text x="66" y="72" fill="#FFF8EA" font-size="28" font-family="Segoe UI, Arial, sans-serif" font-weight="700">ControlNet Style Transfer</text>
+  <text x="913" y="72" fill="#C9E4D5" font-size="18" font-family="Segoe UI, Arial, sans-serif">Stable Diffusion 1.5 + ControlNet Canny</text>
+
+  <rect x="64" y="138" width="456" height="500" rx="18" fill="#F8F4EB" stroke="#E2D9C8"/>
+  <text x="90" y="178" fill="#2A2A2A" font-size="26" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Input</text>
+  <rect x="90" y="206" width="180" height="180" rx="14" fill="#E0E7DF"/>
+  <rect x="314" y="206" width="180" height="180" rx="14" fill="#E7DED1"/>
+  <text x="118" y="302" fill="#3D5A4A" font-size="24" font-family="Segoe UI, Arial, sans-serif">Source Image</text>
+  <text x="336" y="302" fill="#735B3E" font-size="24" font-family="Segoe UI, Arial, sans-serif">Reference</text>
+
+  <rect x="90" y="420" width="404" height="18" rx="9" fill="#DFD5C6"/>
+  <rect x="90" y="420" width="275" height="18" rx="9" fill="#B9723D"/>
+  <text x="90" y="408" fill="#5B4630" font-size="18" font-family="Segoe UI, Arial, sans-serif">Strength</text>
+
+  <rect x="90" y="470" width="404" height="18" rx="9" fill="#DFD5C6"/>
+  <rect x="90" y="470" width="198" height="18" rx="9" fill="#436B5C"/>
+  <text x="90" y="458" fill="#2F4F42" font-size="18" font-family="Segoe UI, Arial, sans-serif">ControlNet Scale</text>
+
+  <rect x="90" y="520" width="404" height="18" rx="9" fill="#DFD5C6"/>
+  <rect x="90" y="520" width="312" height="18" rx="9" fill="#9C7C52"/>
+  <text x="90" y="508" fill="#5D4930" font-size="18" font-family="Segoe UI, Arial, sans-serif">CFG / Steps</text>
+
+  <rect x="90" y="570" width="196" height="42" rx="12" fill="#173A2F"/>
+  <text x="132" y="598" fill="#FFF8EA" font-size="22" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Generate</text>
+
+  <rect x="566" y="138" width="650" height="500" rx="18" fill="#FAF6EF" stroke="#E2D9C8"/>
+  <text x="594" y="178" fill="#2A2A2A" font-size="26" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Output Preview</text>
+  <rect x="594" y="206" width="594" height="340" rx="16" fill="url(#paint0_linear)"/>
+  <path d="M632 476C698 394 782 334 870 350C926 361 987 429 1057 425C1107 422 1144 386 1188 342V546H632V476Z" fill="#F6D58A" fill-opacity="0.75"/>
+  <path d="M594 486C655 452 738 453 798 486C870 526 918 524 976 492C1047 453 1124 451 1188 482V546H594V486Z" fill="#29473C" fill-opacity="0.78"/>
+  <text x="618" y="590" fill="#5B4630" font-size="18" font-family="Segoe UI, Arial, sans-serif">Preview includes final image and optional Canny debug view.</text>
+
+  <defs>
+    <linearGradient id="paint0_linear" x1="594" y1="206" x2="1188" y2="546" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D5E0D5"/>
+      <stop offset="0.5" stop-color="#F0D7B1"/>
+      <stop offset="1" stop-color="#B56D45"/>
+    </linearGradient>
+  </defs>
+</svg>
